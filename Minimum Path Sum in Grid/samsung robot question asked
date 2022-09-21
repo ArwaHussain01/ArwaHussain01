@@ -1,0 +1,65 @@
+Problem Statement
+Sample Input 1:
+2
+2 3
+5 9 6
+11 5 2
+1 1
+5
+Sample Output 1:
+21
+5
+Explanation For Sample Output 1:
+In test case 1, Consider a grid of 2*3:
+
+For this the grid the path with minimum value is (0,0) -> (0,1) -> (1,1) -> (1,2). And the sum along this path is 5 + 9 +5 + 2 = 21. So the ans is 21.
+
+In test case 2, The given grid is:
+
+For this the grid the path with minimum value is (0,0) -> (0,1) -> (0,2) -> (1,2) -> (2,2).The sum along this path is 1 + 2 + 3 + 4 + 9 = 19.
+Sample Input 2:
+2
+2 2
+5 6
+1 2
+3 3
+1 2 3
+4 5 4
+7 5 9
+Sample Output 2:
+8
+19
+Explanation For Sample Output 2:
+In test case 1, For this the grid the path with minimum value is (0,0) -> (1,0) -> (1,1). The sum along this path is 5 + 1 + 2 = 8.
+
+In test case 2, The given grid is:
+
+For this the grid the path with minimum value is (0,0) -> (0,1) -> (0,2) -> (1,2) -> (2,2).The sum along this path is 1 + 2 + 3 + 4 + 9 = 19.
+
+
+
+#include <bits/stdc++.h> 
+int minSumPath(vector<vector<int>> &matrix) {
+    int n = matrix.size();
+    int m = matrix[0].size();
+    vector<vector<int> > dp(n,vector<int>(m,0));
+    for(int i=0; i<n ; i++){
+        for(int j=0; j<m; j++){
+            if(i==0 && j==0) dp[i][j] = matrix[i][j];
+            else{
+                
+                int up = matrix[i][j];
+                if(i>0) up += dp[i-1][j];
+                else up += 1e9;
+                
+                int left = matrix[i][j];
+                if(j>0) left+=dp[i][j-1];
+                else left += 1e9;
+                
+                dp[i][j] = min(up,left);
+            }
+        }
+    }
+    
+    return dp[n-1][m-1];
+}
