@@ -1,0 +1,87 @@
+We are given an ‘N*M’ matrix. We need to find the maximum path sum from any cell of the first row to any cell of the last row.
+
+At every cell we can move in three directions: to the bottom cell (↓), to the bottom-right cell(↘), or to the bottom-left cell(↙).
+
+2
+4 4
+1 2 10 4
+100 3 2 1
+1 1 20 2
+1 2 2 1
+3 3
+10 2 3
+3 7 2
+8 1 5
+Output 1 :
+105
+25
+Explanation Of Input 1 :
+In the first test case for the given matrix,
+
+The maximum path sum will be 2->100->1->2, So the sum is 105(2+100+1+2).
+
+In the second test case for the given matrix, the maximum path sum will be 10->7->8, So the sum is 25(10+7+8).
+Input 2 :
+2
+3 3
+1 2 3
+9 8 7
+4 5 6
+4 6
+10 10 2 -13 20 4
+1 -9 -81 30 2 5
+0 10 4 -79 2 -10
+1 -5 2 20 -11 4
+Output 2 :
+17
+74
+Explanation Of Input 2 :
+In the first test case for the given matrix, the maximum path sum will be 3->8->6, So the sum is 17(3+8+6).
+
+In the second test case for the given matrix, the maximum path sum will be 20->30->4->20, So the sum is 74(20+30+4+20).
+
+
+
+
+
+
+#include <bits/stdc++.h> 
+int getMaxPathSum(vector<vector<int>> &matrix)
+{
+    int n = matrix.size();
+    int m = matrix[0].size();
+    
+    vector<int> prev(m,0), temp(m,0);
+    
+    // Initializing first row - base condition
+    for(int j=0; j<m; j++){
+        prev[j] = matrix[0][j];
+    }
+    
+    for(int i=1; i<n; i++){
+        for(int j=0;j<m;j++){
+            
+            int up = matrix[i][j] + prev[j];
+            
+            int leftDiagonal= matrix[i][j];
+            if(j-1>=0) leftDiagonal += prev[j-1];
+            else leftDiagonal += -1e9;
+            
+            int rightDiagonal = matrix[i][j];
+            if(j+1<m) rightDiagonal += prev[j+1];
+            else rightDiagonal += -1e9;
+            
+            temp[j] = max(up, max(leftDiagonal,rightDiagonal));
+            
+        }
+        prev=temp;
+    }
+    
+    int maxi = INT_MIN;
+    
+    for(int j=0; j<m;j++){
+        maxi = max(maxi,prev[j]);
+    }
+    
+    return maxi;
+}
