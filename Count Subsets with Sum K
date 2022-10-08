@@ -1,0 +1,26 @@
+#include <bits/stdc++.h> 
+int findWaysDp(vector<int> &num, int tar,int index,vector<vector<int>> &dp)
+{
+    //if(tar == 0) return 1;
+    if(index == -1)
+    {
+        if(tar==0) return 1;
+        else return 0;
+    }
+    
+    if(dp[index][tar] != -1) return dp[index][tar];
+    
+    int pick=0;
+    if(num[index] <= tar)pick = findWaysDp(num, tar-num[index], index-1, dp);
+    int notPick = findWaysDp(num, tar, index-1, dp);
+    
+    return dp[index][tar] = pick + notPick;
+}
+
+int findWays(vector<int> &num, int tar)
+{
+    int index = num.size();
+    vector<vector<int>> dp(index,vector<int>(tar+1,-1));
+    
+    return findWaysDp(num,tar,index-1,dp);
+}
