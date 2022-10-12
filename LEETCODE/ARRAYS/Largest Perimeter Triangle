@@ -1,0 +1,32 @@
+Given an array of non-negative integers. Find out three elements from this array that form a triangle of the maximum perimeter.
+
+Examples:  
+
+Input : {6, 1, 6, 5, 8, 4}
+Output : 20
+
+Input : {2, 20, 7, 55, 1, 33, 12, 4}
+Output : Triangle formation is not possible.
+
+Input: {33, 6, 20, 1, 8, 12, 5, 55, 4, 9}
+Output: 41 
+
+
+
+
+class Solution {
+public:
+    int largestPerimeter(vector<int>& nums) {
+        int n=nums.size();
+        sort(nums.begin(),nums.end());
+        for(int i=n-1;i>1;i--)
+        {
+        if(nums[i]<nums[i-1]+nums[i-2])
+        {
+        
+        return nums[i]+nums[i-1]+nums[i-2];
+        }
+        }
+        return 0;
+    }
+};
