@@ -52,4 +52,29 @@ int main() {
   cout<<"The Maximum value of items, thief can steal is " <<knapsack(wt,val,n,W);
 }
 
+ Another way is by using one row itself to solve this problem that is is previous row because we know when computing we go ind-1 and try to find that particular va;ue for the same capacity 
+ same for picking that itme so we make changes from right to left 
  
+ #include <bits/stdc++.h> 
+int knapsack(vector<int> wt, vector<int> val, int n, int maxWeight) 
+{
+   vector<int> prev(maxWeight+1,0);
+    for(int i=wt[0];i<=maxWeight;i++)
+    {
+    prev[i]=val[0];
+    }
+    for(int ind=1;ind<n;ind++)
+    {
+     for(int cap=maxWeight;cap>=0;cap--)
+     {
+      int notpick=0+prev[cap];
+      int pick=INT_MIN;
+      if(wt[ind]<=cap)
+      {
+      pick=val[ind]+prev[cap-wt[ind]];
+      }
+      prev[cap]=max(pick,notpick);
+     }
+    }
+ return prev[maxWeight];
+}
