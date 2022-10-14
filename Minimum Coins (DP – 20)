@@ -1,0 +1,43 @@
+
+
+We are given a target sum of ‘X’ and ‘N’ distinct numbers denoting the coin denominations. 
+We need to tell the minimum number of coins required to reach the target sum.
+We can pick a coin denomination for any number of times we want.
+
+#include <bits/stdc++.h> 
+int minimumElements(vector<int> &num, int x)
+{
+    int n=num.size();
+    vector<vector<int>> dp(n,vector<int>(x+1,0));
+    
+    for(int i=0;i<=x;i++)
+    {
+    if(i%num[0]==0)
+    {
+    dp[0][i]=i/num[0];
+    }
+    else
+    {
+    dp[0][i]=1e9;
+    }
+    }
+    
+    for(int ind=1;ind<n;ind++)
+    {
+     for(int T=0;T<=x;T++)
+     {
+       int notpick=0+dp[ind-1][T];
+       int pick=1e9;
+       if(num[ind]<=T)
+       {
+       pick=1+dp[ind][T-num[ind]];
+       }
+       dp[ind][T]=min(notpick,pick);  
+     }
+    }
+    int ans=dp[n-1][x];
+    if(ans>=1e9)
+        return -1;
+    return ans;
+    
+}
