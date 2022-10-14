@@ -1,0 +1,31 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+long countWaysToMakeChange(int *denominations, int n, int value)
+{
+    vector<vector<long>> dp(n,vector<long>(value+1,0));
+    
+    for(int i=0;i<=value;i++)
+    {
+     
+     dp[0][i]=(i%denominations[0]==0);
+     
+        
+    }
+    
+    for(int ind=1;ind<n;ind++)
+    {
+    for(int t=0;t<=value;t++)
+    {
+    long notpick=dp[ind-1][t];
+    long pick=0;
+    if(denominations[ind]<=t)
+    {
+    pick=dp[ind][t-denominations[ind]];
+    }
+        
+    dp[ind][t]=pick+notpick;
+    }
+    }
+    return dp[n-1][value];
+}
