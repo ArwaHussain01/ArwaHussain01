@@ -1,0 +1,116 @@
+// Online C++ compiler to run C++ program online
+#include <bits/stdc++.h>
+using namespace std;
+
+class node
+{
+    int data;
+    node *lc,*rc;
+    friend class tree;
+};
+
+class tree
+{
+    node *root;
+    public:
+    tree();
+    void create_r();
+    void create_r(node *root);
+    void levelOrder(node *root);
+};
+
+tree::tree()
+{
+    root=NULL;
+}
+
+void tree::create_r()
+{
+    node *root;
+    root=new node();
+    cout<<"\nEnter the data:";
+    cin>>root->data;
+    root->lc=root->rc=NULL;
+    
+    create_r(root);
+    
+
+    cout<<"\n Traversal level wise:";
+    levelOrder(root);
+    
+}
+void tree::create_r(node *temp)
+{
+    node *curr;
+    char ch;
+    cout<<"\n do you want to insert data to the left "<<temp->data<<"(y/n):"<<" ";
+    cin>>ch;
+    if(ch=='y')
+    {
+        curr=new node();
+        cout<<"\n enter the data";
+        cin>>curr->data;
+        curr->lc=curr->rc=NULL;
+        if(temp->lc==NULL)
+        {
+            temp->lc=curr;
+        }
+        create_r(temp->lc);
+    }
+    cout<<"\n do you want to insert data to the right "<<temp->data<<"(y/n):"<<" ";
+    cin>>ch;
+    if(ch=='y')
+    {
+        curr=new node();
+        cout<<"\n enter the data";
+        cin>>curr->data;
+        curr->lc=curr->rc=NULL;
+        if(temp->rc==NULL)
+        {
+            temp->rc=curr;
+        }
+        create_r(temp->rc);
+    }
+    
+}
+void tree:: levelOrder(node *root)
+{
+    queue<node*> q;
+    if(root==NULL)
+    {
+        cout<<"\n nothing";
+    }
+    node *temp,*val;
+    temp=root;
+    q.push(temp);
+    cout<<"\n";
+    while(!q.empty())
+    {
+        int s=q.size();
+        while(s>0)
+        {
+            val=q.front();
+            cout<<val->data<<" ";
+            if(val->lc!=NULL)
+            {
+                q.push(val->lc);
+            }
+            if(val->rc!=NULL)
+            {
+                q.push(val->rc);
+            }
+            q.pop();
+            s--;
+        }
+        cout<<"\n";
+    }
+}
+
+
+int main() {
+    
+    tree bt;
+    bt.create_r();
+
+    return 0;
+}
