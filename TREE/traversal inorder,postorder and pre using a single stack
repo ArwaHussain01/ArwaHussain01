@@ -1,0 +1,137 @@
+// Online C++ compiler to run C++ program online
+#include <bits/stdc++.h>
+using namespace std;
+
+class node
+{
+    int data;
+    node *lc,*rc;
+    friend class tree;
+};
+
+class tree
+{
+    node *root;
+    public:
+    tree();
+    void create_r();
+    void create_r(node *root);
+    void Traversal(node *root);
+};
+
+tree::tree()
+{
+    root=NULL;
+}
+
+void tree::create_r()
+{
+    node *root;
+    root=new node();
+    cout<<"\nEnter the data:";
+    cin>>root->data;
+    root->lc=root->rc=NULL;
+    
+    create_r(root);
+    
+
+    cout<<"\n Traversal level wise:";
+    Traversal(root);
+    
+}
+void tree::create_r(node *temp)
+{
+    node *curr;
+    char ch;
+    cout<<"\n do you want to insert data to the left "<<temp->data<<"(y/n):"<<" ";
+    cin>>ch;
+    if(ch=='y')
+    {
+        curr=new node();
+        cout<<"\n enter the data";
+        cin>>curr->data;
+        curr->lc=curr->rc=NULL;
+        if(temp->lc==NULL)
+        {
+            temp->lc=curr;
+        }
+        create_r(temp->lc);
+    }
+    cout<<"\n do you want to insert data to the right "<<temp->data<<"(y/n):"<<" ";
+    cin>>ch;
+    if(ch=='y')
+    {
+        curr=new node();
+        cout<<"\n enter the data";
+        cin>>curr->data;
+        curr->lc=curr->rc=NULL;
+        if(temp->rc==NULL)
+        {
+            temp->rc=curr;
+        }
+        create_r(temp->rc);
+    }
+    
+}
+
+void tree::Traversal(node *root)
+{
+    stack<pair<node*,int>> s;
+    s.push({root,1});
+    if(root==NULL)
+    {
+        cout<<"\nNothing to display";
+    }
+    vector<int>pre,pos,in;
+    while(!s.empty())
+    {
+        auto it=s.top();
+        s.pop();
+        if(it.second==1)
+        {
+            pre.push_back(it.first->data);
+            it.second++;
+            s.push(it);
+            if (it.first -> lc != NULL) {
+            s.push({it.first -> lc,1});
+        }
+        }
+        else if (it.second == 2) {
+      in.push_back(it.first -> data);
+      it.second++;
+      s.push(it);
+
+      if (it.first -> rc != NULL) {
+        s.push({it.first -> rc,1});
+      }
+    }
+    // don't push it back again 
+    else {
+      pos.push_back(it.first -> data);
+    }
+    
+}
+for(int i=0;i<pre.size();i++)
+{
+    cout<<pre[i]<<" ";
+}
+cout<<"\n";
+cout<<"Postorder: ";
+for(int i=0;i<pos.size();i++)
+{
+    cout<<pos[i]<<" ";
+}
+cout<<"\n";
+cout<<"Inorder: ";
+for(int i=0;i<in.size();i++)
+{
+    cout<<in[i]<<" ";
+}
+}
+int main() {
+    
+    tree bt;
+    bt.create_r();
+
+    return 0;
+}
