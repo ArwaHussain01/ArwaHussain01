@@ -1,0 +1,93 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+class node
+{
+    int data;
+    node *lc,*rc;
+    friend class tree;
+};
+
+class tree
+{
+    node *root;
+    public:
+    tree();
+    void create_r();
+    void create_r(node *root);
+    int maxDepth(node *root);
+};
+
+tree::tree()
+{
+    root=NULL;
+}
+
+void tree::create_r()
+{
+    node *root;
+    root=new node();
+    cout<<"\nEnter the data:";
+    cin>>root->data;
+    root->lc=root->rc=NULL;
+    
+    create_r(root);
+    
+
+    cout<<"\n Height of the tree";
+   int height= maxDepth(root);
+   cout<<"  "<<height;
+    
+    
+    
+}
+void tree::create_r(node *temp)
+{
+    node *curr;
+    char ch;
+    cout<<"\n do you want to insert data to the left "<<temp->data<<"(y/n):"<<" ";
+    cin>>ch;
+    if(ch=='y')
+    {
+        curr=new node();
+        cout<<"\n enter the data";
+        cin>>curr->data;
+        curr->lc=curr->rc=NULL;
+        if(temp->lc==NULL)
+        {
+            temp->lc=curr;
+        }
+        create_r(temp->lc);
+    }
+    cout<<"\n do you want to insert data to the right "<<temp->data<<"(y/n):"<<" ";
+    cin>>ch;
+    if(ch=='y')
+    {
+        curr=new node();
+        cout<<"\n enter the data";
+        cin>>curr->data;
+        curr->lc=curr->rc=NULL;
+        if(temp->rc==NULL)
+        {
+            temp->rc=curr;
+        }
+        create_r(temp->rc);
+    }
+    
+}
+int tree::maxDepth(node *root)
+{
+    if(root==NULL) return 0;
+    
+    int lh=maxDepth(root->lc);
+    int rh=maxDepth(root->rc);
+    
+    return 1+max(lh,rh);
+    
+}
+int main()
+{
+    tree bt;
+    bt.create_r();
+    return 0;
+}
