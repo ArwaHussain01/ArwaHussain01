@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        int lsf=INT_MAX;
+        int selltoday=0;
+        int overallpr=0;
+        for(int i=0;i<prices.size();i++)
+        {
+        if(lsf>prices[i])
+        {
+lsf=prices[i];
+        }
+        selltoday=prices[i]-lsf;
+        if(overallpr<selltoday)
+        {
+            overallpr=selltoday;
+        }
+        }
+        return overallpr;
+    }
+};
+buy and sell at the same day
