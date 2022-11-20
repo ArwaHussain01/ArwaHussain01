@@ -1,0 +1,17 @@
+public:
+    vector<int> leaders(int a[], int n){
+        int le=a[n-1];
+        vector<int>output;
+        output.push_back(le);
+       for(int i=n-2;i>=0;i--)
+       {
+           if(a[i]>=le)
+           {
+               le=a[i];
+               output.push_back(le);
+           }
+       }
+       reverse(output.begin(),output.end());
+       return output;
+        
+    }
