@@ -1,0 +1,28 @@
+vector<int> nextPermutation(int N, vector<int> arr){
+        int ind1=-1;
+        for(int i=N-2;i>=0;i--)
+        {
+            if(arr[i]<arr[i+1])
+            {
+                5
+                break;
+            }
+        }
+        if(ind1==-1)
+        {
+            sort(arr.begin(),arr.end());
+            return arr;
+        }
+        
+        for(int i=N-1;i>=ind1;i--)
+        {
+            if(arr[i]>arr[ind1])
+            {
+                swap(arr[i],arr[ind1]);
+                break;
+            }
+        }
+        sort(arr.begin()+ind1+1,arr.end());
+        return arr;
+        
+    }
